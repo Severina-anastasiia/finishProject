@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/admin_layout}">
+<head>
+    <meta charset="utf-8">
+    <title>Details Personal</title>
+</head>
+<body>
+
+<div layout:fragment="admin_content">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-2 mt-2">
+                <div class="card-header">
+                    Details Personal
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>id</th>
+                            <td th:text="${personal.getId()}"></td>
+                        </tr>
+                        <tr>
+                            <th>name</th>
+                            <td th:text="${personal.getFullName()}"></td>
+                        </tr>
+                        <tr>
+                            <th>created</th>
+                            <td th:text="${#calendars.format(personal.getCreated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>updated</th>
+                            <td th:text="${#calendars.format(personal.getUpdated(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>email</th>
+                            <td th:text="${personal.getEmail()}"></td>
+                        </tr>
+                        <tr>
+                            <th>gender</th>
+                            <td th:text="${personal.getGenderType()}"></td>
+                        </tr>
+                        <tr th:if="${personal.getBirthDay() != null}">
+                            <th>birthday</th>
+                            <td th:text="${#calendars.format(personal.getBirthDay(),'dd MMMM yyyy')}"></td>
+                        </tr>
+                        <tr th:if="${personal.getBirthDay() != null}">
+                            <th>age</th>
+                            <td th:text="${personal.getAge()}"></td>
+                        </tr>
+
+                    </table>
+                    <div th:if="${personal.getEnabled()}" class="mt-2 mb-2">
+                        <div class="btn-group">
+                            <a class="btn" th:href="@{'/admin/personals/details/' + ${personal.getId()} + '/lock'}"><i class="fa fa-unlock" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                    <div th:unless="${personal.getEnabled()}" class="mt-2 mb-2">
+                        <div class="btn-group">
+                            <a class="btn" th:href="@{'/admin/personals/details/' + ${personal.getId()} + '/unlock'}"><i class="fa fa-lock" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
